@@ -5,5 +5,11 @@
 ###############################
 # Uninstall Apps via chocolatey
 ###############################
-choco uninstall -yx git
-choco uninstall -yx php
+cuninst -y -x git
+cuninst -y -x php
+cuninst -y -x putty
+cuninst -y -x mtputty
+cuninst -y -x mysql.workbench
+cuninst -y -x nodejs
+cuninst -y -x atom
+cuninst -y -x phpstorm
