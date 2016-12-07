@@ -6,3 +6,4 @@
 # Uninstall Apps via chocolatey
 ###############################
 choco uninstall -yx git
+choco uninstall -yx php
