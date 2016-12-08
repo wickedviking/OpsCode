@@ -65,6 +65,15 @@ iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 Write-Host
 
 ###############################################################################
+# Install Boxstarter
+###############################################################################
+cinst -y boxstarter
+
+###############################################################################
+# Create DevHost-Dev and DevHost-Test VMs
+###############################################################################
+
+###############################################################################
 # Install Packages via Chocolatey
 ###############################################################################
 Write-Host "Installing Packages via Chocolatey"
@@ -115,7 +124,11 @@ cinst -y blender
 
 Write-Host
 
-#non-Chocolatey installs
+##############################################################################
+# Manual Installs
+##############################################################################
+
+#PxKeystrokeForScreencasts
 $url = "https://raw.githubusercontent.com/Phaiax/PxKeystrokesForScreencasts/master/Releases/v0.3.1/PxKeystrokesUi.exe"
 $output = "c:\tools\PxKeystrokesUi.exe"
 
