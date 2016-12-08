@@ -1,4 +1,9 @@
-﻿$url = "https://raw.githubusercontent.com/Phaiax/PxKeystrokesForScreencasts/master/Releases/v0.3.1/PxKeystrokesUi.exe"
-$output = "c:\tools\PxKeystrokesUi.exe"
+﻿$url = "http://bit.ly/2hpM7bG"
+$output = Join-Path $PSScriptRoot "Add-Path.ps1"
+Start-BitsTransfer -Source $url -Destination $output
+.$output
 
-Get-From-Web $url $output
+$url = "http://bit.ly/2hpM7bG"
+$output = Join-Path $PSScriptRoot "Add-Path.ps1"
+Start-BitsTransfer -Source $url -Destination $output
+.$output

@@ -8,37 +8,6 @@
 ###############################################################################
 
 ###############################################################################
-# Add-Path $path
-#
-# Helper function to add a path to the environment path variable in a 
-# persistent manner.
-###############################################################################
-function Add-Path() {
-    [Cmdletbinding()]
-    param([parameter(Mandatory=$True, ValueFromPipeline=$True, Position=0)][String[]]$addedFolder)
-
-    $oldPath=(Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).Path
-
-    if (!$addedFolder) {
-        Return 'No Folder Supplied. $ENV:PATH Unchanged'
-    }
-
-    if (!(Test-Path $addedFolder)) {
-        Return 'Folder Does Not Exist, Cannot be added to $ENV:PATH'
-    }cd
-
-    if ($ENV:PATH | Select-String -SimpleMatch $addedFolder) {
-        return "Folder already within $ENV:PATH"
-    }
-
-    $newPath = $oldPath+';'+$addedFolder
-    Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
-
-    return $newPath
-
-}
-
-###############################################################################
 # Get-From-Web $url $destination [$addPath]
 #
 # Helper function to fetch files from the web @ $url and store them in 
@@ -56,6 +25,14 @@ function Get-From-Web ([string]$url = "", [string]$destination = "", [boolean]$a
         Add-Path "c:\tools\"
     }    
 }
+
+
+# Include Helper other helper functions
+$url = "http://bit.ly/2gGrLec"
+$output = "Includes.ps1"
+
+Get-From-Web $url $output
+."Includes.ps1"
 
 ###############################################################################
 # Install Chocolatey
