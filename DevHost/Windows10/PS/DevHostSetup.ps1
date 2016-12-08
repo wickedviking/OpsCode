@@ -1,4 +1,5 @@
-﻿Write-Host "Installing Chocolatey"
+﻿
+Write-Host "Installing Chocolatey"
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 Write-Host
 
@@ -49,6 +50,9 @@ obs
 blender
 
 Write-Host
+
+#non-Chocolatey installs
+https://raw.githubusercontent.com/Phaiax/PxKeystrokesForScreencasts/master/Releases/v0.3.1/PxKeystrokesUi.exe
 
 Write-Host "Refreshing Path"
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
