@@ -1,6 +1,6 @@
 ﻿# Version Control
-cup -y git
-cup -y svn
+cuninst -y git
+cuninst -y svn
 
 # Languages available on host
 cup -y php
@@ -9,7 +9,7 @@ cup -y golang
 
 # Remote Connectivity
 cup -y putty
-cup -y mtputty --allow-empty-checksums
+cup -y mtputty
 cup -y winscp
 
 # Database access
@@ -37,3 +37,7 @@ cup -y vagrant
 cup -y packer
 cup -y docker
 cup -y chefdk
+
+#Screen Recording/Keypress OSD/Video Editing
+cup -y obs
+cup -y blender

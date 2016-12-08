@@ -7,41 +7,45 @@
 ###############################
 
 # Version Control
-cuninst -y -x git
-cuninst -y -x svn
+cuninst -y git
+cuninst -y svn
 
 # Languages available on host
-cuninst -y -x php
-cuninst -y -x nodejs
-cuninst -y -x golang
+cuninst -y php
+cuninst -y nodejs
+cuninst -y golang
 
 # Remote Connectivity
-cuninst -y -x putty
-cuninst -y -x mtputty --allow-empty-checksums
-cuninst -y -x winscp
+cuninst -y putty
+cuninst -y mtputty
+cuninst -y winscp
 
 # Database access
-cuninst -y -x mysql.workbench
+cuninst -y mysql.workbench
 
 # Editors and IDEs
-cuninst -y -x phpstorm
-cuninst -y -x notepadplusplus
+cuninst -y phpstorm
+cuninst -y notepadplusplus
 
 #Browsers
-cuninst -y -x googlechrome
-cuninst -y -x firefox
+cuninst -y googlechrome
+cuninst -y firefox
 
 #Password Managers
-cuninst -y -x lastpass
-cuninst -y -x lastpass-for-applications
+cuninst -y lastpass
+cuninst -y lastpass-for-applications
 
 #Chat/Messaging
-cuninst -y -x slack
-cuninst -y -x mirc
+cuninst -y slack
+cuninst -y mirc
 
 #Images/Containers/DevOps
-cuninst -y -x rufus
-cuninst -y -x vagrant
-cuninst -y -x packer
-cuninst -y -x docker
-cuninst -y -x chefdk
+cuninst -y rufus
+cuninst -y vagrant
+cuninst -y packer
+cuninst -y docker
+cuninst -y chefdk
+
+#Screen Recording/Keypress OSD/Video Editing
+cuninst -y obs
+cuninst -y blender

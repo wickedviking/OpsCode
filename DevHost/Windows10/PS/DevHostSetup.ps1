@@ -1,8 +1,72 @@
-﻿
+﻿###############################################################################
+# DevHostSetup.ps1
+#
+# This script is intended to be run after Windows installation, update, and
+# driver install is complete or after TearDown.ps1 has been run.
+#
+# Based on https://gist.github.com/vintem/6334646
+###############################################################################
+
+###############################################################################
+# Add-Path $path
+#
+# Helper function to add a path to the environment path variable in a 
+# persistent manner.
+###############################################################################
+function Add-Path() {
+    [Cmdletbinding()]
+    param([parameter(Mandatory=$True, ValueFromPipeline=$True, Position=0)][String[]]$addedFolder)
+
+    $oldPath=(Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).Path
+
+    if (!$addedFolder) {
+        Return 'No Folder Supplied. $ENV:PATH Unchanged'
+    }
+
+    if (!(Test-Path $addedFolder)) {
+        Return 'Folder Does Not Exist, Cannot be added to $ENV:PATH'
+    }cd
+
+    if ($ENV:PATH | Select-String -SimpleMatch $addedFolder) {
+        return "Folder already within $ENV:PATH"
+    }
+
+    $newPath = $oldPath+';'+$addedFolder
+    Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $newPath
+
+    return $newPath
+
+}
+
+###############################################################################
+# Get-From-Web $url $destination [$addPath]
+#
+# Helper function to fetch files from the web @ $url and store them in 
+# $destination.
+###############################################################################
+function Get-From-Web ([string]$url = "", [string]$destination = "", [boolean]$addPath=$true) {
+    Write-Output "Fetching $($url)"
+    $start_time = Get-Date
+
+    Import-Module BitsTransfer
+    Start-BitsTransfer -Source $url -Destination $output
+    Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
+    
+    if($addPath.Equals($true)){
+        Add-Path "c:\tools\"
+    }    
+}
+
+###############################################################################
+# Install Chocolatey
+###############################################################################
 Write-Host "Installing Chocolatey"
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 Write-Host
 
+###############################################################################
+# Install Packages via Chocolatey
+###############################################################################
 Write-Host "Installing Packages via Chocolatey"
 
 # Version Control
@@ -46,20 +110,29 @@ cinst -y docker
 cinst -y chefdk
 
 #Screen Recording/Keypress OSD/Video Editing
-obs
-blender
+cinst -y obs
+cinst -y blender
 
 Write-Host
 
 #non-Chocolatey installs
-https://raw.githubusercontent.com/Phaiax/PxKeystrokesForScreencasts/master/Releases/v0.3.1/PxKeystrokesUi.exe
+$url = "https://raw.githubusercontent.com/Phaiax/PxKeystrokesForScreencasts/master/Releases/v0.3.1/PxKeystrokesUi.exe"
+$output = "c:\tools\PxKeystrokesUi.exe"
 
-Write-Host "Refreshing Path"
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+Get-From-Web $url $output
 
+###############################################################################
+# Application Configurations
+###############################################################################
 Write-Host "Configuring git"
 git config --global user.email "wickedvikingstudios@gmail.com"
 git config --global user.name "wickedviking"
+
+###############################################################################
+# Host Configurations, clean up, and customizations
+###############################################################################
+Write-Host "Refreshing Path"
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
 Write-Host "Removing all desktop icons"
 Remove-Item C:\Users\*\Desktop\*lnk -Force
