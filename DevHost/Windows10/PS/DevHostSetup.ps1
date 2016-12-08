@@ -7,32 +7,13 @@
 # Based on https://gist.github.com/vintem/6334646
 ###############################################################################
 
-###############################################################################
-# Get-From-Web $url $destination [$addPath]
-#
-# Helper function to fetch files from the web @ $url and store them in 
-# $destination.
-###############################################################################
-function Get-From-Web ([string]$url = "", [string]$destination = "", [boolean]$addPath=$true) {
-    Write-Output "Fetching $($url)"
-    $start_time = Get-Date
-
-    Import-Module BitsTransfer
-    Start-BitsTransfer -Source $url -Destination $output
-    Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
-    
-    if($addPath.Equals($true)){
-        Add-Path "c:\tools\"
-    }    
-}
-
-
 # Include Helper other helper functions
 $url = "http://bit.ly/2gGrLec"
-$output = "Includes.ps1"
+$output = Join-Path $PSScriptRoot "Includes.ps1"
+Import-Module BitsTransfer
+Start-BitsTransfer -Source $url -Destination $output
+.$output
 
-Get-From-Web $url $output
-."Includes.ps1"
 
 ###############################################################################
 # Install Chocolatey
