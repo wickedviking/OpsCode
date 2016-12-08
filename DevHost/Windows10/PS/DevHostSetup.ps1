@@ -14,6 +14,17 @@ Import-Module BitsTransfer
 Start-BitsTransfer -Source $url -Destination $output
 .$output
 
+# Are we running in a Virtual Machine?
+$localIpAddress = ((ipconfig | findstr [0-9].\.)[0]).Split()[-1]
+$virtualMachine=(Get-ComputerVirtualStatus $localIpAddress).IsVirtual
+
+###############################################################################
+# If we aren't running in a VM, lets create the DevHost-Dev and DevHost-Test
+# Virtuals.
+###############################################################################
+if($virtualMachine -ne $false) {
+    Write-Output "TODO: Provision a couple of VMS."
+}
 
 ###############################################################################
 # Install Chocolatey

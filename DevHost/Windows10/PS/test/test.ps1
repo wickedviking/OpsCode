@@ -5,8 +5,8 @@ Import-Module BitsTransfer
 Start-BitsTransfer -Source $url -Destination $output
 .$output
 
-#$Credential = Get-Credential
-If(Get-ComputerVirtualStatus '10.101.120.21') {
+$localIpAddress = ((ipconfig | findstr [0-9].\.)[0]).Split()[-1]
+If( (Get-ComputerVirtualStatus $localIpAddress).IsVirtual ) {
     Write-Host "True"
 } Else {
     Write-Host "False"
