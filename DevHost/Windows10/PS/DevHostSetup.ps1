@@ -39,8 +39,14 @@ Write-Host
 cinst -y boxstarter
 
 ###############################################################################
-# Create DevHost-Dev and DevHost-Test VMs
+# Some Boxstarter WinConfig updates
 ###############################################################################
+Import-Module Boxstarter.Chocolatey
+
+Install-WindowsUpdate -getUpdatesFromMS=$true -acceptEula=$true -SuppressReboots=$true
+Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions
+Set-TaskbarOptions -Size Small -UnLock -Dock Top -Combine Always
+Enable-RemoteDesktop
 
 ###############################################################################
 # Install Packages via Chocolatey
